@@ -1,0 +1,9 @@
+name = "KalaNamak"
+defaultTargets = ["kalanamak"]
+
+[[lean_lib]]
+name = "KalaNamak"
+
+[[lean_exe]]
+name = "kalanamak"
+root = "Main"
