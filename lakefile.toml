@@ -1,6 +1,10 @@
 name = "KalaNamak"
 defaultTargets = ["kalanamak"]
 
+[[require]]
+name = "batteries"
+scope = "leanprover-community"
+
 [[lean_lib]]
 name = "KalaNamak"
 
