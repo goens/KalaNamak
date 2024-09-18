@@ -44,8 +44,9 @@ variable {n : Nat}
 def lookupEClass (id : EClassId n) : EGraphM n <| EClass n := do
   let eg ← get
   let id' : Fin eg.uf.size := eg.ufSize ▸ id
-  let ⟨uf', res⟩ := eg.uf.find id'
-  let _ ← set {eg with uf := uf'} -- todo: prove size preserved
-  return eg.eClassMap res.val
+  let ⟨uf', ⟨res, h⟩⟩ := eg.uf.find id'
+  let _ ← set {eg with uf := uf', ufSize := h ▸ eg.ufSize}
+  have hn : n = uf'.size := h ▸ eg.ufSize
+  return eg.eClassMap (hn ▸ res)
 
 end EGraph
