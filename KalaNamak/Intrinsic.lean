@@ -31,10 +31,8 @@ theorem Term.beq_head_args {α : Type _} {n : Nat} [BEq α] {a b : Term α n} :
   simp [BEq.beq, instBEqTerm]
 -/
 
-variable (n : Nat)
-
 -- is that a good hash at all? probabbly not
-instance [Hashable α] : Hashable (Term α n) where
+instance [Hashable α] {n : Nat} : Hashable (Term α n) where
   hash a := hash a.head + hash a.args
 
 class ToTerm (α : Type _) extends BEq α, Hashable α where
@@ -79,7 +77,7 @@ def checkEquiv! (self : EGraph α) (fst snd : Nat) :
   if h : fst < self.size ∧ snd < self.size then
     self.checkEquiv ⟨fst, h.1⟩ ⟨snd, h.2⟩
   else
-    UnionFind.panicWith (self, false) "index out of bounds"
+    panicWith (self, false) "index out of bounds"
 
 @[inherit_doc UnionFind.checkEquivN]
 def checkEquivN (self : EGraph α) (fst snd : Fin n) (h : n = self.size) :
@@ -91,7 +89,8 @@ def checkEquivD (self : EGraph α) (fst snd : Nat) :
   EGraph α × Bool :=
   let sx := self.ufind.findD fst
   let sy := sx.1.findD snd
-  let hsize : sy.1.size = self.ufind.size := sorry
+  let hsize : sy.1.size = self.ufind.size := by
+    simp [sy, sx]
   ({self with ufind := sy.1, classes := hsize ▸ self.classes}, sx.2 == sy.2)
 
 -- This should be StateM

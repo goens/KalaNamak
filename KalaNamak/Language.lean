@@ -17,10 +17,10 @@ inductive ENode (n : Nat)
 
 /--
 An EClass is morally a set of ENodes. We model this
-with a list of ENodes here, and make sure the invariants
+with an `Array` of ENodes here, and make sure the invariants
 are held separately.
 -/
-abbrev EClass (n : Nat) := List (ENode n)
+abbrev EClass (n : Nat) := Array (ENode n)
 
 /--
 The basic data structure, an EGraph.
